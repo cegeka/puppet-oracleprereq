@@ -12,15 +12,32 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
+  include 'limits'
 
-  $libpackages = ['compat-libstdc++-33', 'glibc-devel.i386',
-                  'glibc-devel.x86_64', 'glibc-headers', 'libaio',
-                  'libaio-devel', 'numactl-devel', 'elfutils-libelf-devel',
-                  'unixODBC', 'unixODBC-devel', 'xorg-x11-xauth']
-  $buildpackages = [ 'make' , 'cpp', 'libstdc++-devel', 'gcc', 'gcc-c++',
+  $libpackages = ['compat-libstdc++-33',
+                  'glibc-devel.i386',
+                  'glibc-devel.x86_64',
+                  'glibc-headers',
+                  'libaio',
+                  'libaio-devel',
+                  'numactl-devel',
+                  'elfutils-libelf-devel',
+                  'unixODBC',
+                  'unixODBC-devel',
+                  'xorg-x11-xauth']
+  $buildpackages = ['make',
+                  'cpp',
+                  'libstdc++-devel',
+                  'gcc',
+                  'gcc-c++',
                   'compat-db']
-  $systemtools = ['ksh', 'bind-utils', 'smartmontools', 'ftp', 'libgomp',
-                  'unzip' ,'sysstat']
+  $systemtools = ['ksh',
+                  'bind-utils',
+                  'smartmontools',
+                  'ftp',
+                  'libgomp',
+                  'unzip',
+                  'sysstat']
   package { [$libpackages,$buildpackages,$systemtools]:
     ensure => present,
   }
@@ -49,6 +66,13 @@ class oracleprereq {
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
     refreshonly => true
+  }
+  limits::conf {
+    'oracle-soft-nproc': domain  => oracle, type => soft, item => nproc, value => 2047;
+    'oracle-hard-nproc': domain  => oracle, type => hard, item => nproc, value => 16384;
+    'oracle-soft-nofile': domain => oracle, type => soft, item => nofile, value => 1024;
+    'oracle-hard-nofile': domain => oracle, type => hard, item => nofile, value => 65536;
+    'oracle-hard-stack': domain  => oracle, type => hard, item => stack, value => 10240;
   }
 
   file { '/etc/multipath.conf':
