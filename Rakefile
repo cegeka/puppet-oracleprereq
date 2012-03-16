@@ -57,6 +57,7 @@ task :style do
   puts "Checking puppet module code style..."
   linter = PuppetLint.new
   linter.configuration.log_format = '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
+  linter.configuration.send("disable_80chars")
 
   FileList['**/*.pp'].each do |puppet_file|
     puts "Evaluating code style for #{puppet_file}"
