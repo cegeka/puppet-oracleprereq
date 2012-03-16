@@ -1,0 +1,18 @@
+defaults {
+	user_friendly_names yes
+}
+
+blacklist {
+	devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
+	devnode "^(hd|xvd)[a-z]*"
+	devnode "^cciss!c[0-9]d[0-9]*"
+}
+
+devices {
+	device {
+		vendor			"IBM"
+		product			"2145"
+		path_grouping_policy	group_by_prio
+		prio_callout		"/sbin/mpath_prio_alua /dev/%n"
+	}
+}
