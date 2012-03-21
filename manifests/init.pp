@@ -12,7 +12,6 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
-  include 'limits'
 
   $libpackages = ['compat-libstdc++-33',
                   'glibc-devel.i386',
@@ -66,13 +65,6 @@ class oracleprereq {
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
     refreshonly => true
-  }
-  limits::conf {
-    'oracle-soft-nproc': domain  => oracle, type => soft, item => nproc, value => 2047;
-    'oracle-hard-nproc': domain  => oracle, type => hard, item => nproc, value => 16384;
-    'oracle-soft-nofile': domain => oracle, type => soft, item => nofile, value => 1024;
-    'oracle-hard-nofile': domain => oracle, type => hard, item => nofile, value => 65536;
-    'oracle-hard-stack': domain  => oracle, type => hard, item => stack, value => 10240;
   }
 
   file { '/etc/multipath.conf':
