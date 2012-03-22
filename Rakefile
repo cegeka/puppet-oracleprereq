@@ -189,7 +189,7 @@ namespace "jenkins" do
   task :archive_properties_file do
     dist_dir = "target/dist"
 
-    module_name = ENV["MODULE_NAME"]
+    module_name = ENV["JOB_NAME"]
     git_commit = ENV["GIT_COMMIT"]
     
     if !git_commit.nil? and !git_commit.empty?
