@@ -13,11 +13,11 @@
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
 
-  $libpackages = ['compat-libstdc++-33',
-                  'glibc-devel.i386',
-                  'glibc-devel.x86_64',
-                  'glibc-headers',
-                  'libaio',
+  $glibc = $::architecture ? {
+    i386    => ['glibc-devel.i386','glibc-headers'],
+    x86_64  => ['glibc-devel.i386','glibc-devel.x86_64','glibc-headers'],
+  }
+  $libpackages = ['libaio',
                   'libaio-devel',
                   'numactl-devel',
                   'elfutils-libelf-devel',
@@ -29,6 +29,7 @@ class oracleprereq {
                   'libstdc++-devel',
                   'gcc',
                   'gcc-c++',
+                  'compat-libstdc++-33',
                   'compat-db']
   $systemtools = ['ksh',
                   'bind-utils',
@@ -37,10 +38,10 @@ class oracleprereq {
                   'libgomp',
                   'unzip',
                   'sysstat']
-  package { [$libpackages,$buildpackages,$systemtools]:
+  package { [$libpackages,$glibc,$buildpackages,$systemtools]:
     ensure => present,
   }
-  package { ["oracleasm-$::kernelrelease",'oracleasmlib','oracleasm-support']:
+  package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
     ensure => present,
   }
 
