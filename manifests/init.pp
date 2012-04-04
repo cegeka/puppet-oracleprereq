@@ -14,8 +14,16 @@
 class oracleprereq {
 
   $glibc = $::architecture ? {
-    i386    => ['glibc-devel.i386','glibc-headers'],
-    x86_64  => ['glibc-devel.i386','glibc-devel.x86_64','glibc-headers'],
+    #i386     => ['glibc-devel.i386','glibc-headers'],
+    #x86_64   => ['glibc-devel.i386','glibc-devel.x86_64','glibc-headers'],
+    i386      => $::operatingsystemrelease ? {
+                  /^5.*$/ => ["glibc-devel.${::hardwaremodel}",'glibc-headers'],
+                  /^6.*$/ => ['glibc-definitionevel.i686','glibc-headers'],
+    },
+    x86_64    => $::operatingsystemrelease ? {
+                  /^5.*$/ => ["glibc-devel.${::hardwaremodel}",'glibc-devel.x86_64','glibc-headers'],
+                  /^6.*$/ => ['glibc-devel.i686','glibc-devel.x86_64','glibc-headers'],
+    },
   }
   $libpackages = ['libaio',
                   'libaio-devel',
@@ -41,7 +49,12 @@ class oracleprereq {
   package { [$libpackages,$glibc,$buildpackages,$systemtools]:
     ensure => present,
   }
-  package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
+  if $::architecture == 'x86_64' {
+    package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
+      ensure => present,
+    }
+  }
+  package { 'device-mapper-multipath':
     ensure => present,
   }
 
@@ -62,7 +75,7 @@ class oracleprereq {
     ]
   }
 
-  exec { 'sysctl -p':
+  exec { 'sysctl -e -p':
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
     refreshonly => true
@@ -76,5 +89,6 @@ class oracleprereq {
   service { 'multipathd':
     ensure    => running,
     hasstatus => true,
+    require   => Package['device-mapper-multipath'],
   }
 }
