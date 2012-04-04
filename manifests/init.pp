@@ -19,7 +19,7 @@ class oracleprereq {
                   /^6.*$/ => ['glibc-devel.i686','glibc-headers'],
     },
     x86_64    => $::operatingsystemrelease ? {
-                  /^5.*$/ => ["glibc-devel.i386",'glibc-devel.x86_64','glibc-headers'],
+                  /^5.*$/ => ['glibc-devel.i386','glibc-devel.x86_64','glibc-headers'],
                   /^6.*$/ => ['glibc-devel.i686','glibc-devel.x86_64','glibc-headers'],
     },
   }
