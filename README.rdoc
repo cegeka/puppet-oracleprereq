@@ -1,3 +1,5 @@
-oracleprereq
+= puppet-oracleprereq module
+
+{<img src='https://codex.cegeka.be/jenkins/job/puppet-oracleprereq/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-oracleprereq/]
 
 This is the oracleprereq module.
