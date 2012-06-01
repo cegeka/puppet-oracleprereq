@@ -17,7 +17,6 @@ include oracleprereq::params
   package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
     ensure => present,
   }
-  
   # There is no oracleasm package for rhel6
   if $::operatingsystemrelease =~ /^5.*$/ {
     if $::architecture == 'x86_64' {
