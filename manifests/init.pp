@@ -12,48 +12,19 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
+include oracleprereq::params
 
-  $glibc = $::architecture ? {
-    i386      => $::operatingsystemrelease ? {
-                  /^5.*$/ => ['glibc-devel.i386','glibc-headers'],
-                  /^6.*$/ => ['glibc-devel.i686','glibc-headers'],
-    },
-    x86_64    => $::operatingsystemrelease ? {
-                  /^5.*$/ => ['glibc-devel.i386','glibc-devel.x86_64','glibc-headers'],
-                  /^6.*$/ => ['glibc-devel.i686','glibc-devel.x86_64','glibc-headers'],
-    },
-  }
-  $libpackages = ['libaio',
-                  'libaio-devel',
-                  'numactl-devel',
-                  'elfutils-libelf-devel',
-                  'unixODBC',
-                  'unixODBC-devel',
-                  'xorg-x11-xauth']
-  $buildpackages = ['make',
-                  'cpp',
-                  'libstdc++-devel',
-                  'gcc',
-                  'gcc-c++',
-                  'compat-libstdc++-33',
-                  'compat-db']
-  $systemtools = ['ksh',
-                  'bind-utils',
-                  'smartmontools',
-                  'ftp',
-                  'libgomp',
-                  'unzip',
-                  'sysstat']
-  package { [$libpackages,$glibc,$buildpackages,$systemtools]:
+  package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
     ensure => present,
   }
-  if $::architecture == 'x86_64' {
-    package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
-      ensure => present,
+  
+  # There is no oracleasm package for rhel6
+  if $::operatingsystemrelease =~ /^5.*$/ {
+    if $::architecture == 'x86_64' {
+      package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
+        ensure => present,
+      }
     }
-  }
-  package { 'device-mapper-multipath':
-    ensure => present,
   }
 
   augeas { 'sysctl.conf':
