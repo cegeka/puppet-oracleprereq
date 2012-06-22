@@ -12,7 +12,12 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
-include oracleprereq::params
+  
+  include oracleprereq::params
+
+  Augeas {
+    load_path => "/usr/share/augeas/lenses:${settings::vardir}/augeas/lenses",
+  }
 
   package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
     ensure => present,
@@ -43,15 +48,21 @@ include oracleprereq::params
     ]
   }
 
+  augeas { 'oracleasm':
+    context => '/files/etc/sysconfig/oracleasm',
+    changes => 'set ORACLEASM_SCANEXCLUDE sd',
+    require => Package['oracleasmlib'],
+  }
+
   exec { 'sysctl -e -p':
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
-    refreshonly => true
+    refreshonly => true,
   }
 
   file { '/etc/multipath.conf':
     ensure  => present,
-    content => template('oracleprereq/multipath.erb')
+    content => template('oracleprereq/multipath.erb'),
   }
 
   service { 'multipathd':
