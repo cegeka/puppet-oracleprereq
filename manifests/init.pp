@@ -12,7 +12,7 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class oracleprereq {
-  
+
   include oracleprereq::params
 
   Augeas {
