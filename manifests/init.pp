@@ -15,10 +15,6 @@ class oracleprereq {
 
   include oracleprereq::params
 
-  Augeas {
-    load_path => "/usr/share/augeas/lenses:${settings::vardir}/augeas/lenses",
-  }
-
   package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
     ensure => present,
   }
@@ -49,9 +45,10 @@ class oracleprereq {
   }
 
   augeas { 'oracleasm':
-    context => '/files/etc/sysconfig/oracleasm',
-    changes => ['set ORACLEASM_SCANEXCLUDE sd'],
-    require => Package['oracleasmlib'],
+    context   => '/files/etc/sysconfig/oracleasm',
+    changes   => 'set ORACLEASM_SCANEXCLUDE sd',
+    load_path => "${settings::vardir}/lib/augeas/lenses",
+    require   => Package['oracleasmlib'],
   }
 
   exec { 'sysctl -e -p':
