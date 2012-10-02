@@ -17,7 +17,10 @@ class oracleprereq::params {
                   'numactl-devel',
                   'elfutils-libelf-devel',
                   'unixODBC-devel',
-                  'xorg-x11-xauth']
+                  'xorg-x11-xauth',
+                  'libXp',
+                  'libXt',
+                  'libXtst']
   $buildpackages = ['make',
                   'cpp',
                   'libstdc++-devel',
