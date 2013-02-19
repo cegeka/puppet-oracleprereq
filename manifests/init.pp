@@ -25,6 +25,14 @@ class oracleprereq {
         ensure => present,
       }
     }
+
+    augeas { 'oracleasm':
+      context   => '/files/etc/sysconfig/oracleasm',
+      changes   => 'set ORACLEASM_SCANEXCLUDE \'"sd"\'',
+      load_path => "${settings::vardir}/lib/augeas/lenses",
+      require   => Package['oracleasmlib'],
+    }
+
   }
 
   augeas { 'sysctl.conf':
@@ -42,13 +50,6 @@ class oracleprereq {
       'set net.core.wmem_default 262144',
       'set net.core.wmem_max 1048586'
     ]
-  }
-
-  augeas { 'oracleasm':
-    context   => '/files/etc/sysconfig/oracleasm',
-    changes   => 'set ORACLEASM_SCANEXCLUDE \'"sd"\'',
-    load_path => "${settings::vardir}/lib/augeas/lenses",
-    require   => Package['oracleasmlib'],
   }
 
   exec { 'sysctl -e -p':
