@@ -11,6 +11,11 @@ class oracleprereq::params {
     },
   }
 
+  $multipath_template = $::operatingsystemrelease ? {
+    /^5.*$/ => 'multipath-el5',
+    /^6.*$/ => 'multipath-el6',
+  }
+
   $libpackages = ['libaio',
                   'glibc-headers',
                   'libaio-devel',
