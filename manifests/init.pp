@@ -59,7 +59,7 @@ class oracleprereq {
 
   file { '/etc/multipath.conf':
     ensure  => present,
-    content => template('oracleprereq/multipath.erb'),
+    content => template("oracleprereq/${oracleprereq::params::multipath_template}.erb"),
   }
 
   service { 'multipathd':
