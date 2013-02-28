@@ -45,12 +45,15 @@ class oracleprereq {
     }
   }
 
+  $memsize_bytes = to_bytes($::memorysize)
+  $shmall = $memsize_bytes / $::pagesize
+
   augeas { 'sysctl.conf':
     context => '/files/etc/sysctl.conf',
     changes => [
       'set fs.aio-max-nr 1048576',
       'set fs.file-max 6815744',
-      'set kernel.shmall 2097152',
+      "set kernel.shmall ${shmall}",
       'set kernel.shmmax 4294967295',
       'set kernel.shmmni 4096',
       'set kernel.sem "250 32000 100 128"',
