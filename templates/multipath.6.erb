@@ -1,0 +1,26 @@
+defaults {
+	user_friendly_names yes
+}
+
+blacklist {
+	devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
+	devnode "^(hd|xvd)[a-z]*"
+	devnode "^cciss!c[0-9]d[0-9]*"
+}
+
+devices {
+	device {
+		vendor			"IBM"
+		product			"2145"
+		getuid_callout          "/lib/udev/scsi_id --whitelisted --device=/dev/%n"
+		features		"1 queue_if_no_path"
+		hardware_handler	"0"
+		path_selector		"round-robin 0"
+		path_grouping_policy	group_by_prio
+		failback		immediate
+		rr_weight		uniform
+		rr_min_io		1000
+		path_checker		tur
+		prio			alua
+	}
+}
