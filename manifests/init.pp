@@ -33,6 +33,16 @@ class oracleprereq {
       require   => Package['oracleasmlib'],
     }
 
+    file { '/etc/multipath.conf':
+      ensure  => present,
+      content => template('oracleprereq/multipath.5.erb'),
+    }
+  }
+  else {
+    file { '/etc/multipath.conf':
+      ensure  => present,
+      content => template('oracleprereq/multipath.6.erb'),
+    }
   }
 
   augeas { 'sysctl.conf':
@@ -56,11 +66,6 @@ class oracleprereq {
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
     refreshonly => true,
-  }
-
-  file { '/etc/multipath.conf':
-    ensure  => present,
-    content => template('oracleprereq/multipath.erb'),
   }
 
   service { 'multipathd':
