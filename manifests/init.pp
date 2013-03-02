@@ -46,7 +46,7 @@ class oracleprereq {
   }
 
   $memsize_bytes = to_bytes($::memorysize)
-  $shmall = $memsize_bytes / $::pagesize
+  $shmall = floor($memsize_bytes / $::pagesize)
 
   augeas { 'sysctl.conf':
     context => '/files/etc/sysctl.conf',
