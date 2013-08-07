@@ -61,7 +61,8 @@ class oracleprereq {
       'set net.core.rmem_default 262144',
       'set net.core.rmem_max 4194304',
       'set net.core.wmem_default 262144',
-      'set net.core.wmem_max 1048586'
+      'set net.core.wmem_max 1048586',
+      'set vm.swappiness'
     ]
   }
 
