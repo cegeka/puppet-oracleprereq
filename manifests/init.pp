@@ -27,7 +27,8 @@ class oracleprereq {
     }
 
     augeas { 'oracleasm':
-      context   => '/files/etc/sysconfig/oracleasm',
+      lens      => 'Oracleasm.lns',
+      incl      => '/etc/sysconfig/oracleasm',
       changes   => 'set ORACLEASM_SCANEXCLUDE \'"sd"\'',
       load_path => "${settings::vardir}/lib/augeas/lenses",
       require   => Package['oracleasmlib'],
