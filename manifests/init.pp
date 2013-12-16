@@ -57,7 +57,7 @@ class oracleprereq {
       "set kernel.shmall ${shmall}",
       'set kernel.shmmax 4294967295',
       'set kernel.shmmni 4096',
-      'set kernel.sem "250 32000 100 128"',
+      'set kernel.sem "250 256000 100 1024"',
       'set net.ipv4.ip_local_port_range "9000 65500"',
       'set net.core.rmem_default 262144',
       'set net.core.rmem_max 4194304',
