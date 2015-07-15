@@ -6,6 +6,11 @@ blacklist {
 	devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
 	devnode "^(hd|xvd)[a-z]*"
 	devnode "^cciss!c[0-9]d[0-9]*"
+<%- if !@multipath_additional_blacklists.empty? -%>
+<% @multipath_additional_blacklists.each do |blacklist| -%>
+	<%= blacklist %>
+<% end -%>
+<%- end -%>
 }
 
 devices {
