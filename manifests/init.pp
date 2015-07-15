@@ -11,7 +11,9 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class oracleprereq {
+class oracleprereq(
+  $multipath_additional_blacklists = []
+) {
 
   include oracleprereq::params
 
