@@ -75,6 +75,11 @@ class oracleprereq(
     refreshonly => true,
   }
 
+  file { '/etc/multipath.conf':
+    ensure  => present,
+    content => template("oracleprereq/${oracleprereq::params::multipath_template}.erb"),
+  }
+
   service { 'multipathd':
     ensure    => running,
     hasstatus => true,
