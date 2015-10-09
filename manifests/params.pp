@@ -41,6 +41,6 @@ class oracleprereq::params {
                   'unzip',
                   'sysstat',
                   'device-mapper-multipath',
-                  'cvuqdisk']
+                  'cvuqdisk',
                   'device-mapper-multipath']
 }
