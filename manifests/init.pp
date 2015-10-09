@@ -36,13 +36,15 @@ class oracleprereq(
       require   => Package['oracleasmlib'],
     }
 
-    file { '/etc/multipath.conf':
+    file { '/etc/multipath.conf-el5':
+      path    => '/etc/multipath.conf',
       ensure  => present,
       content => template('oracleprereq/multipath.5.erb'),
     }
   }
   else {
-    file { '/etc/multipath.conf':
+    file { '/etc/multipath.conf-el6':
+      path    => '/etc/multipath.conf',
       ensure  => present,
       content => template('oracleprereq/multipath.6.erb'),
     }
