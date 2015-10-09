@@ -40,7 +40,6 @@ class oracleprereq::params {
                   'libgomp',
                   'unzip',
                   'sysstat',
-                  'device-mapper-multipath',
                   'cvuqdisk',
                   'device-mapper-multipath']
 }
