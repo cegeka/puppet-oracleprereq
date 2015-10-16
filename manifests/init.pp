@@ -39,15 +39,15 @@ class oracleprereq(
     }
 
     file { '/etc/multipath.conf-el5':
-      path    => '/etc/multipath.conf',
       ensure  => present,
+      path    => '/etc/multipath.conf',
       content => template('oracleprereq/multipath.5.erb'),
     }
   }
   else {
     file { '/etc/multipath.conf-el6':
-      path    => '/etc/multipath.conf',
       ensure  => present,
+      path    => '/etc/multipath.conf',
       content => template('oracleprereq/multipath.6.erb'),
     }
   }
