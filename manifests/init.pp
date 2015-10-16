@@ -20,6 +20,8 @@ class oracleprereq(
   package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
     ensure => present,
   }
+  Package <| title == 'sysstat' |>
+
   # There is no oracleasm package for rhel6
   if $::operatingsystemrelease =~ /^5.*$/ {
     if $::architecture == 'x86_64' {
@@ -37,15 +39,15 @@ class oracleprereq(
     }
 
     file { '/etc/multipath.conf-el5':
-      path    => '/etc/multipath.conf',
       ensure  => present,
+      path    => '/etc/multipath.conf',
       content => template('oracleprereq/multipath.5.erb'),
     }
   }
   else {
     file { '/etc/multipath.conf-el6':
-      path    => '/etc/multipath.conf',
       ensure  => present,
+      path    => '/etc/multipath.conf',
       content => template('oracleprereq/multipath.6.erb'),
     }
   }
@@ -75,11 +77,6 @@ class oracleprereq(
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
     subscribe   => Augeas['sysctl.conf'],
     refreshonly => true,
-  }
-
-  file { '/etc/multipath.conf':
-    ensure  => present,
-    content => template("oracleprereq/${oracleprereq::params::multipath_template}.erb"),
   }
 
   service { 'multipathd':

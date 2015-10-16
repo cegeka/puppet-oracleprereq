@@ -39,7 +39,6 @@ class oracleprereq::params {
                   'ftp',
                   'libgomp',
                   'unzip',
-                  'sysstat',
                   'cvuqdisk',
                   'device-mapper-multipath']
 }
