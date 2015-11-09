@@ -17,7 +17,7 @@ class oracleprereq(
 
   include oracleprereq::params
 
-  package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools]:
+  package { [$oracleprereq::params::libpackages,$oracleprereq::params::glibc,$oracleprereq::params::buildpackages,$oracleprereq::params::systemtools,$oracleprereq::params::oracle_specific]:
     ensure => present,
   }
   Package <| title == 'sysstat' |>
