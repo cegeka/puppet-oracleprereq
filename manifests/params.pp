@@ -41,7 +41,7 @@ class oracleprereq::params {
                   'unzip',
                   'device-mapper-multipath']
   $oracle_specific = $::architecture ? {
-    'i386'    => '',
+    'i386'    => [],
     'x86_64'  => ['cvuqdisk']
   }
 }
