@@ -39,7 +39,8 @@ class oracleprereq::params {
                   'ftp',
                   'libgomp',
                   'unzip',
-                  'device-mapper-multipath']
+                  'device-mapper-multipath',
+                  'bc']
   $oracle_specific = $::architecture ? {
     'i386'    => [],
     'x86_64'  => ['cvuqdisk']
