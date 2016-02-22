@@ -55,7 +55,7 @@ class oracleprereq(
   $memsize_bytes = to_bytes($::memorysize)
   $shmall = floor($memsize_bytes / $::pagesize)
 
-  augeas { 'sysctl.conf':
+  augeas { 'oracle-sysctl.conf':
     context => '/files/etc/sysctl.conf',
     changes => [
       'set fs.aio-max-nr 1048576',
