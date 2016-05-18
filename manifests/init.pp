@@ -75,7 +75,7 @@ class oracleprereq(
 
   exec { 'sysctl -e -p':
     path        => ['/usr/bin', '/usr/sbin', '/sbin'],
-    subscribe   => Augeas['sysctl.conf'],
+    subscribe   => Augeas['oracle-sysctl.conf'],
     refreshonly => true,
   }
 
