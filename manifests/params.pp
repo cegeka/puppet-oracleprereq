@@ -1,17 +1,17 @@
 class oracleprereq::params {
 
-  $glibc = $::architecture ? {
-    i386      => $::operatingsystemrelease ? {
+  $glibc = $facts['os']['architecture'] ? {
+    i386      => $facts['os']['release']['full'] ? {
                   /^5.*$/ => ['glibc-devel.i386'],
                   /^6.*$/ => ['glibc-devel.i686', 'compat-libcap1'],
     },
-    x86_64    => $::operatingsystemrelease ? {
+    x86_64    => $facts['os']['release']['full'] ? {
                   /^5.*$/ => ['glibc-devel.i386','glibc-devel.x86_64','unixODBC.i386','unixODBC.x86_64'],
                   /^6.*$/ => ['glibc-devel.i686','glibc-devel.x86_64','unixODBC.i686','unixODBC.x86_64', 'compat-libcap1'],
     },
   }
 
-  $multipath_template = $::operatingsystemrelease ? {
+  $multipath_template = $facts['os']['release']['full'] ? {
     /^5.*$/ => 'multipath-el5',
     /^6.*$/ => 'multipath-el6',
   }
@@ -41,7 +41,7 @@ class oracleprereq::params {
                   'unzip',
                   'device-mapper-multipath',
                   'bc']
-  $oracle_specific = $::architecture ? {
+  $oracle_specific = $facts['os']['architecture'] ? {
     'i386'    => [],
     'x86_64'  => ['cvuqdisk']
   }
