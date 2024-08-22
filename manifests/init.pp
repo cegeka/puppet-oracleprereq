@@ -25,7 +25,7 @@ class oracleprereq(
   # There is no oracleasm package for rhel6
   if $facts['os']['release']['full'] =~ /^5.*$/ {
     if $facts['os']['architecture'] == 'x86_64' {
-      package { ["oracleasm-${::kernelrelease}",'oracleasmlib','oracleasm-support']:
+      package { ["oracleasm-${facts['kernelrelease']}",'oracleasmlib','oracleasm-support']:
         ensure => present,
       }
     }
@@ -53,7 +53,7 @@ class oracleprereq(
   }
 
   $memsize_bytes = to_bytes($facts['memory']['system']['total'])
-  $shmall = floor($memsize_bytes / $::pagesize)
+  $shmall = floor($memsize_bytes / $facts['pagesize'])
 
   augeas { 'oracle-sysctl.conf':
     context => '/files/etc/sysctl.conf',
